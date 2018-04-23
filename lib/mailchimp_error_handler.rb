@@ -2,7 +2,7 @@ module MailchimpErrorHandler
 
   extend ActiveSupport::Concern
 
-  RETRY_LIMIT = 5
+  RETRY_LIMIT = 0
 
   included { rescue_from Gibbon::MailChimpError, with: :rescue_with_handler }
 

@@ -14,8 +14,8 @@ module Spree
           Spree::Order.incomplete
                       .of_registered_users
                       .where.not(item_count: 0)
-                      .uniq
                       .pluck(:user_id)
+                      .uniq
         end
 
       end

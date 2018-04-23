@@ -30,7 +30,7 @@ module Spree
                       .group('spree_states.id')
                       .order('COUNT(spree_orders.id) DESC')
                       .limit(MOST_ZONE_WISE_ORDERS_COUNT)
-                      .pluck(:state_id)
+                      .pluck('spree_states.id')
         end
         private_class_method :data
 

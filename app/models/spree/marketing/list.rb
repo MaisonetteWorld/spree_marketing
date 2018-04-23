@@ -38,14 +38,14 @@ module Spree
         _users_data = users_data
         _old_users_data = old_users_data
         emails = _users_data.keys
-        old_emails = _old_users_data.keys
+        old_emails = []
         subscribable_users_data = users_data.slice(*(emails - old_emails))
         ListModificationJob.perform_later id, subscribable_users_data, removable_contact_uids(old_emails - emails)
       end
 
       def self.generator
-        list = find_by(name: NAME_TEXT)
-        list ? list.update_list : new(name: NAME_TEXT).generate
+        list = find_by(name: self::NAME_TEXT)
+        list ? list.update_list : new(name: self::NAME_TEXT).generate
       end
 
       def self.generate_all

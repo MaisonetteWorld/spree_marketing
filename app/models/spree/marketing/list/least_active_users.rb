@@ -6,10 +6,11 @@ module Spree
         # Constants
         NAME_TEXT = 'Least Active Users'
         MAXIMUM_PAGE_EVENT_COUNT = 5
-        AVAILABLE_REPORTS = [:log_ins_by, :purchases_by, :product_views_by, :cart_additions_by]
+        # AVAILABLE_REPORTS = [:log_ins_by, :purchases_by, :product_views_by, :cart_additions_by]
 
         def user_ids
           Spree::PageEvent.group(:actor_id)
+                          .group('spree_page_events.id')
                           .having('COUNT(spree_page_events.id) < :maximum_count', maximum_count: MAXIMUM_PAGE_EVENT_COUNT)
                           .of_registered_users
                           .where('created_at >= :time_frame', time_frame: computed_time)

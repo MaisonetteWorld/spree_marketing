@@ -29,10 +29,11 @@ module Spree
           Spree::Payment.joins(:payment_method, :order)
                         .where('spree_orders.completed_at >= :time_frame', time_frame: computed_time)
                         .where(state: :completed)
+                        .group('spree_payment_methods.created_at >= :time_frame', time_frame: computed_time)
                         .group('spree_payment_methods.id')
                         .order('COUNT(spree_orders.id) DESC')
                         .limit(MOST_USED_PAYMENT_METHODS_COUNT)
-                        .pluck(:payment_method_id)
+                        .pluck('spree_payment_methods.id')
         end
         private_class_method :data
 
